@@ -111,16 +111,25 @@ class DoorProtectSensor(AjaxSensor):
     async def async_update(self):
         await super().async_update() # updating in parent class
         device_info = await self.api.get_device_info(self.hub_id, self._device.get('id'))
+        # Salva i campi che ti interessano
+        self._name_from_api = device_info.get('deviceName')
+        self._model_version = device_info.get('deviceType')
         self._temperature = device_info.get('temperature')
+        self._firmware_version = device_info.get('firmwareVersion')
+        self._serial_number = device_info.get('id')
+        # Se l’API fornisce hw data
+
 
 
     @property
     def device_info(self):
         return {
             "identifiers": {(DOMAIN, f"ajax_{self._device.get('id')}")},
-            "name": "Ajax DoorProtect",
+            "name": self._name_from_api,
             "manufacturer": "Ajax",
-            "model": "DoorProtect",
+            "model": self._model_version,
+            "sw_version": self._firmware_version,
+            "serial_number": self._serial_number,
         }
 
 class MotionProtectSensor(AjaxSensor):
