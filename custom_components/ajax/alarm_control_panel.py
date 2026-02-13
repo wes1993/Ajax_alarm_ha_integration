@@ -61,10 +61,15 @@ class AjaxAlarmPanel(AlarmControlPanelEntity):
         if not hub_info:
             _LOGGER.error(f"Hub info is not available for update {self.hub_id}")
             return
-
+    
         if hub_info:
             self._raw_state = hub_info["state"]
             self._hub_name_from_api = hub_info["name"]
+    		# Salva i campi che ti interessano
+            self._firmware_version = hub_info.get("firmware", {}).get("version")
+            self._serial_number = hub_info.get("id")
+            # Se l’API fornisce hw data
+            self._model_version = hub_info.get("hubSubtype")
             if self.entity_id:
                 self.async_schedule_update_ha_state()
 
@@ -116,7 +121,9 @@ class AjaxAlarmPanel(AlarmControlPanelEntity):
             "identifiers": {(DOMAIN, f"ajax_hub_{self.hub_id}")},
             "name": self._hub_name_from_api,
             "manufacturer": "Ajax",
-            "model": "Hub",
+            "model": self._model_version,
+            "sw_version": self._firmware_version,
+            "serial_number": self._serial_number,
         }
     #
     # @property
