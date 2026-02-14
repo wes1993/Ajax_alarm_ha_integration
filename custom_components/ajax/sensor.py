@@ -118,10 +118,10 @@ class DoorProtectSensor(AjaxSensor):
         device_info = await self.api.get_device_info(self.hub_id, self._device.get('id'))
         # Salva i campi che ti interessano
         self._name_from_api = device_info.get('deviceName')
-        self._model_version = device_info.get('deviceType')
+        #self._model_version = device_info.get('deviceType')
         self._temperature = device_info.get('temperature')
         self._firmware_version = device_info.get('firmwareVersion')
-        self._serial_number = device_info.get('id')
+        #self._serial_number = device_info.get('id')
         
         # Se l’API fornisce hw data
 
