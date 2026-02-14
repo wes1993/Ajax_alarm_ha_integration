@@ -41,6 +41,8 @@ class AjaxSensor(SensorEntity):
         self.api = api
         self._battery = None
         self._native_value = None
+        _LOGGER.error("AJAX device data - DENTRO SENSOR: %s", self._device)
+        _LOGGER.error("Mapped meta - DENTRO SENSOR: %s", self._meta)
 
     @property
     def native_value(self):     
@@ -107,6 +109,8 @@ class DoorProtectSensor(AjaxSensor):
         self._model_version = device.get("device_class", "DoorProtect")
         self._firmware_version = device.get("firmwareVersion", "0")
         self._serial_number = device.get("id", "0")
+        _LOGGER.error("AJAX device data - DENTRO DOORPROTEC: %s", self._device)
+        _LOGGER.error("Mapped meta - DENTRO DOORPROTEC: %s", self._meta)
 
     @property
     def native_value(self):
