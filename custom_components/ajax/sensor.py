@@ -64,6 +64,8 @@ class AjaxSensor(SensorEntity):
             "name": self._attr_name,
             "manufacturer": "Ajax",
             "model": self._meta.get("device_class", "Unknown"),
+            _LOGGER.error("AJAX device data - DENTRO SENSOR: %s", self._device)
+            _LOGGER.error("Mapped meta - DENTRO SENSOR: %s", self._meta)
         }
       
 
@@ -126,6 +128,8 @@ class DoorProtectSensor(AjaxSensor):
         self._temperature = device_info.get('temperature')
         self._firmware_version = device_info.get('firmwareVersion')
         #self._serial_number = device_info.get('id')
+        _LOGGER.error("AJAX device data - DENTRO DOORPROTEC: %s", self._device)
+        _LOGGER.error("Mapped meta - DENTRO DOORPROTEC: %s", self._meta)
         
         # Se l’API fornisce hw data
 
@@ -141,6 +145,8 @@ class DoorProtectSensor(AjaxSensor):
             "model": self._model_version,
             "sw_version": self._firmware_version,
             "serial_number": self._serial_number,
+            _LOGGER.error("AJAX device data - DENTRO DOORPROTEC: %s", self._device)
+            _LOGGER.error("Mapped meta - DENTRO DOORPROTEC: %s", self._meta)
         }
 
 class MotionProtectSensor(AjaxSensor):
