@@ -106,11 +106,11 @@ class DoorProtectSensor(AjaxSensor):
         self._temperature = None
          # INIZIALIZZA QUI i valori usati in device_info
         self._name_from_api = self._attr_name  # valore di fallback
-        self._model_version = device.get("device_class", "DoorProtect")
+        self._model_version = device.get("deviceType", "DoorProtect")
         self._firmware_version = device.get("firmwareVersion", "0")
         self._serial_number = device.get("id", "0")
-        _LOGGER.error("AJAX device data - DENTRO DOORPROTEC: %s", self._device)
-        _LOGGER.error("Mapped meta - DENTRO DOORPROTEC: %s", self._meta)
+        _LOGGER.error("AJAX device data - DENTRO DOORPROTECT: %s", self._device)
+        _LOGGER.error("Mapped meta - DENTRO DOORPROTECT: %s", self._meta)
 
     @property
     def native_value(self):
@@ -126,8 +126,8 @@ class DoorProtectSensor(AjaxSensor):
         self._temperature = device_info.get('temperature')
         self._firmware_version = device_info.get('firmwareVersion')
         #self._serial_number = device_info.get('id')
-        _LOGGER.error("AJAX device data - DENTRO DOORPROTEC: %s", self._device)
-        _LOGGER.error("Mapped meta - DENTRO DOORPROTEC: %s", self._meta)
+        _LOGGER.error("AJAX device data - DENTRO DOORPROTECT UPDATE: %s", self._device)
+        _LOGGER.error("Mapped meta - DENTRO DOORPROTECT UPDATE: %s", self._meta)
         
         # Se l’API fornisce hw data
 
@@ -138,7 +138,7 @@ class DoorProtectSensor(AjaxSensor):
         return {
             "identifiers": {(DOMAIN, f"ajax_{self._device.get('id')}")},
             "via_device": (DOMAIN, f"ajax_hub_{self.hub_id}"),  # <–– qui!
-            "name": self._name_from_api,
+            "name": {(DOMAIN, f"ajax_{self._device.get('deviceName')}")},
             "manufacturer": "Ajax",
             "model": self._model_version,
             "sw_version": self._firmware_version,
