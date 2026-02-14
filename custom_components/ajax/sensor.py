@@ -105,7 +105,7 @@ class DoorProtectSensor(AjaxSensor):
          # INIZIALIZZA QUI i valori usati in device_info
         self._name_from_api = self._attr_name  # valore di fallback
         self._model_version = device.get("device_class", "DoorProtect")
-        self._firmware_version = device.get('firmwareVersion', "0")
+        self._firmware_version = device.get("firmwareVersion", "0")
         self._serial_number = device.get("id", "0")
 
     @property
