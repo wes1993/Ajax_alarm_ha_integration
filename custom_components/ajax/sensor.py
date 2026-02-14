@@ -64,8 +64,6 @@ class AjaxSensor(SensorEntity):
             "name": self._attr_name,
             "manufacturer": "Ajax",
             "model": self._meta.get("device_class", "Unknown"),
-            _LOGGER.error("AJAX device data - DENTRO SENSOR: %s", self._device)
-            _LOGGER.error("Mapped meta - DENTRO SENSOR: %s", self._meta)
         }
       
 
