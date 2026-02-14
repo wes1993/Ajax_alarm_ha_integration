@@ -122,6 +122,7 @@ class DoorProtectSensor(AjaxSensor):
         self._temperature = device_info.get('temperature')
         self._firmware_version = device_info.get('firmwareVersion')
         self._serial_number = device_info.get('id')
+        
         # Se l’API fornisce hw data
 
 
@@ -130,6 +131,7 @@ class DoorProtectSensor(AjaxSensor):
     def device_info(self):
         return {
             "identifiers": {(DOMAIN, f"ajax_{self._device.get('id')}")},
+            "via_device": (DOMAIN, f"ajax_hub_{self.hub_id}"),  # <–– qui!
             "name": self._name_from_api,
             "manufacturer": "Ajax",
             "model": self._model_version,
