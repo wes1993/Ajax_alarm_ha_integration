@@ -105,8 +105,8 @@ class DoorProtectSensor(AjaxSensor):
         super().__init__(device, meta, hub_id, api)
         self._temperature = None
          # INIZIALIZZA QUI i valori usati in device_info
-        self._name_from_api = self._device.get("deviceName", "DoorProtect") # valore di fallback
-        self._model_version = self._device.get("deviceType", "DoorProtect")
+        self._name_from_api = self._device.get("deviceName", "DoorProtectROTTO") # valore di fallback
+        self._model_version = self._device.get("deviceType", "DoorProtectTIPO")
         self._firmware_version = device.get("firmwareVersion", "0")
         self._serial_number = device.get("id", "0")
         _LOGGER.error("AJAX device data - DENTRO DOORPROTECT: %s", self._device)
