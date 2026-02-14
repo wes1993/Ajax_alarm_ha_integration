@@ -143,8 +143,6 @@ class DoorProtectSensor(AjaxSensor):
             "model": self._model_version,
             "sw_version": self._firmware_version,
             "serial_number": self._serial_number,
-            _LOGGER.error("AJAX device data - DENTRO DOORPROTEC: %s", self._device)
-            _LOGGER.error("Mapped meta - DENTRO DOORPROTEC: %s", self._meta)
         }
 
 class MotionProtectSensor(AjaxSensor):
