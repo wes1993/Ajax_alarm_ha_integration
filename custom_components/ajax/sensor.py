@@ -105,11 +105,12 @@ class DoorProtectSensor(AjaxSensor):
         super().__init__(device, meta, hub_id, api)
         self._temperature = None
          # INIZIALIZZA QUI i valori usati in device_info
-        self._name_from_api = self._attr_name  # valore di fallback
-        self._model_version = device.get("deviceType", "DoorProtect")
+        self._name_from_api = self._device.get("deviceName", "DoorProtect") # valore di fallback
+        self._model_version = self._device.get("deviceType", "DoorProtect")
         self._firmware_version = device.get("firmwareVersion", "0")
         self._serial_number = device.get("id", "0")
         _LOGGER.error("AJAX device data - DENTRO DOORPROTECT: %s", self._device)
+        _LOGGER.error("AJAX DEVICEGET - DENTRO DOORPROTECT: %s", device)
         _LOGGER.error("Mapped meta - DENTRO DOORPROTECT: %s", self._meta)
 
     @property
@@ -121,7 +122,7 @@ class DoorProtectSensor(AjaxSensor):
         await super().async_update() # updating in parent class
         device_info = await self.api.get_device_info(self.hub_id, self._device.get('id'))
         # Salva i campi che ti interessano
-        self._name_from_api = device_info.get('deviceName')
+        self._name_from_api = self._device.get('deviceName')
         #self._model_version = device_info.get('deviceType')
         self._temperature = device_info.get('temperature')
         self._firmware_version = device_info.get('firmwareVersion')
@@ -138,7 +139,7 @@ class DoorProtectSensor(AjaxSensor):
         return {
             "identifiers": {(DOMAIN, f"ajax_{self._device.get('id')}")},
             "via_device": (DOMAIN, f"ajax_hub_{self.hub_id}"),  # <–– qui!
-            "name": {(DOMAIN, f"ajax_{self._device.get('deviceName')}")},
+            "name": self._name_from_api,
             "manufacturer": "Ajax",
             "model": self._model_version,
             "sw_version": self._firmware_version,
