@@ -34,8 +34,17 @@ async def do_setup(hass, entry):
         hub_id = hub["hubId"]
         _LOGGER.warning("Fetching devices for hub: %s", hub_id)
         devices = await api.get_hub_devices(hub_id)
-        devices_by_hub[hub_id] = devices
-        all_devices.extend(devices)
+        full_devices = []
+
+       for device in devices:
+           device_id = device["id"]
+           full_info = await api.get_device_info(hub_id, device_id)
+
+           if full_info:
+               full_devices.append(full_info)
+        devices_by_hub[hub_id] = full_devices
+        
+        all_devices.extend(full_devices)
 
     # Store devices in memory
     hass.data[DOMAIN][entry.entry_id]["devices_by_hub"] = devices_by_hub
