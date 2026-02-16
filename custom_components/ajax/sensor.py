@@ -10,7 +10,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
     entities = []
     data = hass.data[DOMAIN][entry.entry_id]
     api = hass.data[DOMAIN][entry.entry_id]["api"]
-    _LOGGER.error("SETUP ENTRY: %s", devices_by_hub)
+    #_LOGGER.error("SETUP ENTRY: %s", devices_by_hub)
     for hub_id, devices in devices_by_hub.items():
 
         for device in devices:
@@ -26,7 +26,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
                 else:
                     entity = AjaxSensor(device, meta, hub_id, api)
                 entities.append(entity)
-    _LOGGER.error("ENTITY: %s", entities)
+                
     async_add_entities(entities)
 
 
