@@ -40,6 +40,10 @@ class AjaxBinarySensor(BinarySensorEntity):
         self._attr_unique_id = f"ajax_{device.get('id')}_{meta.get('device_class')}"
         self._attr_device_class = meta.get("device_class")
         self._alarm_detected = None
+        self._name_from_api = self._device.get("deviceName", "DoorProtectROTTO") # valore di fallback
+        self._model_version = self._device.get("deviceType", "DoorProtectTIPO")
+        self._firmware_version = device.get("firmwareVersion", "0")
+        self._serial_number = device.get("id", "0")
         # self._battery = None
         
 
@@ -50,14 +54,23 @@ class AjaxBinarySensor(BinarySensorEntity):
     async def async_update(self):
         device_info = await self.api.get_device_info(self.hub_id, self._device.get('id'))
         # self._battery = device_info.get('batteryChargeLevelPercentage')
+        # Salva i campi che ti interessano
+        self._name_from_api = device_info.get('deviceName')
+        #self._model_version = device_info.get('deviceType')
+        self._temperature = device_info.get('temperature')
+        self._firmware_version = device_info.get('firmwareVersion')
+        #self._serial_number = device_info.get('id')
     
     @property
     def device_info(self):
         return {
-            "identifiers": {(DOMAIN, f"ajax_{self._device.get('id')}_{self._meta.get('device_class')}")},
-            "name": self._attr_name,
+            "identifiers": {(DOMAIN, f"ajax_{self._device.get('id')}")},
+            "via_device": (DOMAIN, f"ajax_hub_{self.hub_id}"),  # <–– qui!
+            "name": self._name_from_api,
             "manufacturer": "Ajax",
-            "model": self._meta.get("device_class", "Unknown"),
+            "model": self._model_version,
+            "sw_version": self._firmware_version,
+            "serial_number": self._serial_number,
         }
 
     # @property
