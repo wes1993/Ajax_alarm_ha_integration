@@ -107,7 +107,7 @@ class DoorProtectSensor(AjaxSensor):
         super().__init__(device, meta, hub_id, api)
         self._temperature = None
          # INIZIALIZZA QUI i valori usati in device_info
-        device_info = await self.api.get_device_info(self.hub_id, self._device.get('id'))
+        #device_info = await self.api.get_device_info(self.hub_id, self._device.get('id'))
         self._name_from_api = device_info.get('deviceName') # valore di fallback
         self._model_version = device_info.get("deviceType", "DoorProtectTIPO")
         self._firmware_version = device_info.get("firmwareVersion", "0")
