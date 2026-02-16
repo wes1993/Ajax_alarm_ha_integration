@@ -24,8 +24,8 @@ async def async_setup_entry(hass, entry, async_add_entities):
                 elif meta.get("device_class") == "motion_temperature":
                     entity = MotionProtectSensor(device, meta, hub_id, api)              
                 else:
-                    _LOGGER.error("NoDeviceClass")
-                    #entity = AjaxSensor(device, meta, hub_id, api)
+                    
+                    entity = AjaxSensor(device, meta, hub_id, api)
                 entities.append(entity)
                 
     async_add_entities(entities)
@@ -108,10 +108,11 @@ class DoorProtectSensor(AjaxSensor):
         self._temperature = None
          # INIZIALIZZA QUI i valori usati in device_info
         #device_info = await self.api.get_device_info(self.hub_id, self._device.get('id'))
-        self._name_from_api = device_info.get('deviceName') # valore di fallback
-        self._model_version = device_info.get("deviceType", "DoorProtectTIPO")
-        self._firmware_version = device_info.get("firmwareVersion", "0")
-        self._serial_number = device_info.get("id", "0")
+        self._name_from_api = device.get("deviceName")
+        self._model_version = device.get("deviceType", "Unknown")
+        self._firmware_version = device.get("firmwareVersion", "0")
+        self._serial_number = device.get("id", "0")
+
         _LOGGER.error("AJAX device data - DENTRO DOORPROTECT: %s", self._device)
         _LOGGER.error("AJAX DEVICEGET - DENTRO DOORPROTECT: %s", device)
         _LOGGER.error("Mapped meta - DENTRO DOORPROTECT: %s", self._meta)
