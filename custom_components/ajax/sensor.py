@@ -23,8 +23,8 @@ async def async_setup_entry(hass, entry, async_add_entities):
                     entity = DoorProtectSensor(device, meta, hub_id, api)  
                 elif meta.get("device_class") == "motion_temperature":
                     entity = MotionProtectSensor(device, meta, hub_id, api)              
-                else:
-                    entity = AjaxSensor(device, meta, hub_id, api)
+                #else:
+                #    entity = AjaxSensor(device, meta, hub_id, api)
                 entities.append(entity)
                 
     async_add_entities(entities)
